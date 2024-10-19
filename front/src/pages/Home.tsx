@@ -22,6 +22,7 @@ export default function Home() {
             alignItems="center"
             paddingTop="157px"
             height="100vh"
+            width="100vw"
             direction="column"
             gap={isDetecting ? '24px' : '16px'}
             backgroundColor="#EDF1F2"

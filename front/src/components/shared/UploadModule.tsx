@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Box, Button, Image, Text, Input, Progress, Flex } from '@chakra-ui/react';
+import { Button, Image, Text, Input, Progress, Flex } from '@chakra-ui/react';
 import { useNotify } from '@/utils/providers/ToastProvider';
 import closeIcon from '@/assets/images/closeIcon.png';
 import defaultImage from '@/assets/images/defaultImage.png';
