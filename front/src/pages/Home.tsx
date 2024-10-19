@@ -1,3 +1,4 @@
+import UploadModule from '@/components/shared/UploadModule'
 import { VStack, Heading } from '@chakra-ui/react'
 
 /**
@@ -7,6 +8,7 @@ export default function Home() {
     return (
         <VStack alignItems="center" justifyContent="center" height="100vh">
             <Heading>Главная страница</Heading>
+            <UploadModule />
         </VStack>
     )
 }
