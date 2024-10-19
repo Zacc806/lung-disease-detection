@@ -13,7 +13,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
     const success = (message: string) => {
         toast({
-            title: 'Успешно',
+            title: 'Success',
             description: message,
             status: 'success',
             duration: 3000,
@@ -23,7 +23,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
     const error = (message: string) => {
         toast({
-            title: 'Успешно',
+            title: 'Success',
             description: message,
             status: 'error',
             duration: 3000,
@@ -33,8 +33,8 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
     const loading = (promise: Promise<{ message: string }>) => {
         toast({
-            title: 'Загрузка',
-            description: 'Пожалуйста подождите',
+            title: 'Loading...',
+            description: 'Please wait',
             status: 'info',
             duration: null,
             isClosable: true,
@@ -44,7 +44,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
             .then((response) => {
                 toast.closeAll()
                 toast({
-                    title: 'Успешно!',
+                    title: 'Success!',
                     description: response.message,
                     status: 'success',
                     duration: 3000,
@@ -54,8 +54,8 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
             .catch((error) => {
                 toast.closeAll()
                 toast({
-                    title: 'Что-то пошло не так',
-                    description: error.response.data.message || 'Ошибка',
+                    title: 'Something went wrong',
+                    description: error.response.data.message || 'Error',
                     status: 'error',
                     duration: 3000,
                     isClosable: true,
