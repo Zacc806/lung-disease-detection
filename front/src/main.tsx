@@ -6,6 +6,7 @@ import { ToastProvider } from './utils/providers/ToastProvider.tsx'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import './assets/fonts/fonts.css'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
