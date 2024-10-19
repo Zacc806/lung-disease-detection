@@ -4,15 +4,18 @@ import {
     Text,
     Flex,
     Button,
-    Fade
+    Fade,
+    useDisclosure
 } from '@chakra-ui/react'
 import logoImg from '@/assets/images/logo.png'
 import lungImg from '@/assets/images/lung.png'
 import { useState } from 'react'
 import { CirclesLoader } from '@/components/shared/CirlcesLoader'
+import ModalComponent from '@/components/shared/ModalComponent'
 
 export default function Home() {
     const [isDetecting, setIsDetecting] = useState(false)
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <Flex
@@ -124,7 +127,6 @@ export default function Home() {
             <Button
                 backgroundColor={isDetecting ? "#D1D5DB" : "#3C9EEE"}
                 padding="12px 24px"
-                width="87px"
                 height="48px"
                 borderRadius="40px"
                 color="white"
@@ -136,7 +138,7 @@ export default function Home() {
                 _active={{}}
                 _focus={{}}
                 _hover={{}}
-                onClick={() => setIsDetecting(prev => !prev)}
+                onClick={isDetecting ? () => setIsDetecting(false) : onOpen}
             >
                 {isDetecting ? "Cancel" : "Start"}
             </Button>
@@ -157,7 +159,11 @@ export default function Home() {
                     Your data is confidential and secure.
                 </Text>
             </Fade>
-            {/* <UploadModule /> */}
+            <ModalComponent
+                isOpen={isOpen}
+                onClose={onClose}
+                children={<UploadModule onClose={onClose} setIsDetecting={setIsDetecting} />}
+            />
         </Flex>
     )
 }

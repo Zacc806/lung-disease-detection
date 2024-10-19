@@ -11,12 +11,6 @@ train/
 val/
 test/
 
-# Images (if needed)
-*.jpg
-*.jpeg
-*.png
-*.bmp
-
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
