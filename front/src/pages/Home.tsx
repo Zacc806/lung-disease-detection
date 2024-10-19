@@ -3,61 +3,110 @@ import {
     Image,
     Text,
     Flex,
-    Button
+    Button,
+    Fade
 } from '@chakra-ui/react'
 import logoImg from '@/assets/images/logo.png'
 import lungImg from '@/assets/images/lung.png'
+import { useState } from 'react'
 
-/**
- * Simply Plug page if route doesnt exist
- */
 export default function Home() {
+    const [isDetecting, setIsDetecting] = useState(false)
+
     return (
         <Flex
             alignItems="center"
-            justifyContent="center"
+            paddingTop="157px"
             height="100vh"
             direction="column"
-            gap="16px"
+            gap={isDetecting ? '24px' : '16px'}
             backgroundColor="#EDF1F2"
         >
-            <Flex
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                gap="4px"
+            <Fade
+                in={!isDetecting}
+                transition={{ exit: { duration: 0 }, enter: { duration: 0.5 } }}
+                unmountOnExit
             >
-                <Image
-                    src={logoImg}
-                    alt="logo"
-                    width="118px"
-                    height="35px"
-                />
+                <Flex
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap="4px"
+                >
+                    <Image
+                        src={logoImg}
+                        alt="logo"
+                        width="118px"
+                        height="35px"
+                    />
+                    <Text
+                        fontFamily="Poppins"
+                        color="#161718"
+                        textAlign="center"
+                        fontSize="17px"
+                        fontStyle="normal"
+                        fontWeight="400"
+                        lineHeight="normal"
+                    >
+                        Lung Status Diagnosis
+                    </Text>
+                </Flex>
+            </Fade>
+            <Fade
+                in={isDetecting}
+                unmountOnExit
+                transition={{ exit: { duration: 0 }, enter: { duration: 0.5 } }}
+            >
                 <Text
-                    fontFamily="Poppins"
                     color="#161718"
                     textAlign="center"
+                    fontFamily="Poppins"
+                    fontSize="17px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="normal"
+                >
+                    Analyzing your X-ray…
+                </Text>
+            </Fade>
+            <Fade
+                in={isDetecting}
+                unmountOnExit
+                transition={{ exit: { duration: 0 }, enter: { duration: 0.5 } }}
+            >
+                <Text
+                    color="#161718"
+                    textAlign="center"
+                    fontFamily="Poppins"
                     fontSize="17px"
                     fontStyle="normal"
                     fontWeight="400"
                     lineHeight="normal"
+                    maxWidth="1152px"
                 >
-                    Lung Status Diagnosis
+                    This may take a moment as we review your image for signs of lung cancer and other respiratory conditions.
+                    Please wait while we process your results.
                 </Text>
-            </Flex>
-            <Text
-                color="#161718"
-                textAlign="center"
-                fontFamily="Poppins"
-                fontSize="32px"
-                fontStyle="normal"
-                fontWeight="400"
-                lineHeight="normal"
-                width="508px"
+            </Fade>
+            <Fade
+                in={!isDetecting}
+                unmountOnExit
+                transition={{ exit: { duration: 0 }, enter: { duration: 0.5 } }}
             >
-                Early Detection of Lung Cancer
-                and Other Respiratory Diseases
-            </Text>
+                <Text
+                    color="#161718"
+                    textAlign="center"
+                    fontFamily="Poppins"
+                    fontSize="32px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                    width="508px"
+                >
+                    Early Detection of Lung Cancer
+                    and Other Respiratory Diseases
+                </Text>
+            </Fade>
             <Image
                 src={lungImg}
                 alt="upload"
@@ -65,7 +114,8 @@ export default function Home() {
                 height="424px"
             />
             <Button
-                backgroundColor="#3C9EEE"
+                backgroundColor={isDetecting ? "#D1D5DB" : "#3C9EEE"}
+                padding="12px 24px"
                 width="87px"
                 height="48px"
                 borderRadius="40px"
@@ -75,20 +125,30 @@ export default function Home() {
                 fontStyle="normal"
                 fontWeight="600"
                 lineHeight="normal"
+                _active={{}}
+                _focus={{}}
+                _hover={{}}
+                onClick={() => setIsDetecting(prev => !prev)}
             >
-                Start
+                {isDetecting ? "Cancel" : "Start"}
             </Button>
-            <Text
-                color="#6B7280"
-                textAlign="center"
-                fontFamily="Poppins"
-                fontSize="13px"
-                fontStyle="normal"
-                fontWeight="400"
-                lineHeight="normal"
+            <Fade
+                in={!isDetecting}
+                unmountOnExit
+                transition={{ exit: { duration: 0 }, enter: { duration: 0.5 } }}
             >
-                Your data is confidential and secure.
-            </Text>
+                <Text
+                    color="#6B7280"
+                    textAlign="center"
+                    fontFamily="Poppins"
+                    fontSize="13px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                >
+                    Your data is confidential and secure.
+                </Text>
+            </Fade>
             {/* <UploadModule /> */}
         </Flex>
     )
