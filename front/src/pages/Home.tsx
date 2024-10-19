@@ -1,12 +1,5 @@
 import UploadModule from '@/components/shared/UploadModule'
-import {
-    Image,
-    Text,
-    Flex,
-    Button,
-    Fade,
-    useDisclosure
-} from '@chakra-ui/react'
+import { Image, Text, Flex, Button, Fade, useDisclosure } from '@chakra-ui/react'
 import logoImg from '@/assets/images/logo.png'
 import lungImg from '@/assets/images/lung.png'
 import { useState } from 'react'
@@ -15,14 +8,14 @@ import ModalComponent from '@/components/shared/ModalComponent'
 
 export default function Home() {
     const [isDetecting, setIsDetecting] = useState(false)
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <Flex
             alignItems="center"
-            paddingTop="157px"
-            height="100vh"
-            width="100vw"
+            paddingBlock="80px"
+            minHeight="100vh"
+            maxWidth="100vw"
             direction="column"
             gap={isDetecting ? '24px' : '16px'}
             backgroundColor="#EDF1F2"

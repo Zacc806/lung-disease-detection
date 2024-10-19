@@ -1,56 +1,89 @@
-import React, { useState, useRef } from 'react';
-import { Button, Image, Text, Input, Progress, Flex } from '@chakra-ui/react';
-import { useNotify } from '@/utils/providers/ToastProvider';
-import closeIcon from '@/assets/images/closeIcon.png';
-import defaultImage from '@/assets/images/defaultImage.png';
-import uploadImg from '@/assets/images/uploadImg.png';
-import deleteIcon from '@/assets/images/deleteIcon.png';
+import React, { useState, useRef } from 'react'
+import { Button, Image, Text, Input, Progress, Flex } from '@chakra-ui/react'
+import { useNotify } from '@/utils/providers/ToastProvider'
+import closeIcon from '@/assets/images/closeIcon.png'
+import defaultImage from '@/assets/images/defaultImage.png'
+import uploadImg from '@/assets/images/uploadImg.png'
+import deleteIcon from '@/assets/images/deleteIcon.png'
+import { useNavigate } from 'react-router-dom'
 
-export default function UploadModule({ onClose, setIsDetecting }: { onClose: () => void, setIsDetecting: (value: boolean) => void }) {
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const notify = useNotify();
+export default function UploadModule({
+    onClose,
+    setIsDetecting,
+}: {
+    onClose: () => void
+    setIsDetecting: (value: boolean) => void
+}) {
+    const navigation = useNavigate()
+    const [selectedImage, setSelectedImage] = useState<File | null>(null)
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
+    const notify = useNotify()
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+        const file = event.target.files?.[0]
         if (file) {
             if (file.type.startsWith('image/')) {
-                setSelectedImage(file);
-                const reader = new FileReader();
+                setSelectedImage(file)
+                const reader = new FileReader()
                 reader.onloadend = () => {
-                    setPreviewUrl(reader.result as string);
-                };
-                reader.readAsDataURL(file);
+                    setPreviewUrl(reader.result as string)
+                }
+                reader.readAsDataURL(file)
             } else {
-                notify.error('Пожалуйста, выберите изображение');
+                notify.error('Пожалуйста, выберите изображение')
             }
         }
-    };
+    }
 
     const handleUpload = async () => {
         if (selectedImage) {
             try {
-                console.log(selectedImage);
-                notify.success('Изображение успешно загружено');
-                setIsDetecting(true);
-                onClose();
+                setIsDetecting(true)
+                console.log(selectedImage)
+                notify.success('Изображение успешно загружено')
+                onClose()
+                setTimeout(() => {
+                    navigation('/result', {
+                        state: {
+                            diseaseData: {
+                                image_id: 'CXR1000_IM-0001-1001',
+                                predictions: {
+                                    Atelectasis: 0.85,
+                                    Cardiomegaly: 0.1,
+                                    Effusion: 0.7,
+                                    Infiltration: 0.55,
+                                    Mass: 0.05,
+                                    Nodule: 0.2,
+                                    Pneumonia: 0.65,
+                                    Pneumothorax: 0.15,
+                                    Consolidation: 0.6,
+                                    Edema: 0.3,
+                                    Emphysema: 0.05,
+                                    Fibrosis: 0.1,
+                                    'Pleural Thickening': 0.25,
+                                    Hernia: 0.02,
+                                },
+                            },
+                        },
+                    })
+                }, 3000)
             } catch (error) {
-                notify.error('Ошибка при загрузке изображения');
+                notify.error('Ошибка при загрузке изображения')
             }
         } else {
-            notify.error('Пожалуйста, выберите изображение для загрузки');
+            notify.error('Пожалуйста, выберите изображение для загрузки')
         }
-    };
+    }
 
     const handleDelete = () => {
-        setSelectedImage(null);
-        setPreviewUrl(null);
+        setSelectedImage(null)
+        setPreviewUrl(null)
     }
 
     const handleButtonClick = () => {
-        fileInputRef.current?.click();
-    };
+        fileInputRef.current?.click()
+    }
 
     return (
         <Flex
@@ -61,11 +94,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
             padding="40px"
             backdropFilter="blur(15px)"
         >
-            <Flex
-                justifyContent="space-between"
-                alignItems="center"
-                marginBottom="24px"
-            >
+            <Flex justifyContent="space-between" alignItems="center" marginBottom="24px">
                 <Text
                     color="#161718"
                     fontFamily="Poppins"
@@ -108,7 +137,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                 marginBottom="16px"
                 onClick={handleButtonClick}
             >
-                {previewUrl ?
+                {previewUrl ? (
                     <Image
                         src={previewUrl}
                         alt="Preview"
@@ -116,7 +145,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                         width="100%"
                         height="110%"
                     />
-                    :
+                ) : (
                     <>
                         <Flex
                             position="relative"
@@ -125,7 +154,8 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                             overflow="visible"
                             marginBottom="10px"
                         >
-                            <Image src={defaultImage}
+                            <Image
+                                src={defaultImage}
                                 alt="Default image"
                                 width="96px"
                                 height="96px"
@@ -155,7 +185,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                             JPG, PNG (Max 800x400px - 2Mb)
                         </Text>
                     </>
-                }
+                )}
             </Flex>
             <Input
                 type="file"
@@ -217,10 +247,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                         >
                             {Math.round(selectedImage.size / 1024)}KB
                         </Text>
-                        <Flex
-                            width="100%"
-                            alignItems="center"
-                        >
+                        <Flex width="100%" alignItems="center">
                             <Progress
                                 value={selectedImage ? 100 : 0}
                                 backgroundColor="#3C9EEE"
@@ -263,7 +290,7 @@ export default function UploadModule({ onClose, setIsDetecting }: { onClose: () 
                 Upload
             </Button>
         </Flex>
-    );
+    )
 }
 
 // import React, { useState, useRef } from 'react';
