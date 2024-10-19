@@ -3,6 +3,7 @@ import { Image, Text, Flex, Button, Fade } from '@chakra-ui/react'
 import logoImg from '@/assets/images/logo.png'
 import lungImg from '@/assets/images/lung.png'
 import { useState } from 'react'
+import { CirclesLoader } from '@/components/shared/CirlcesLoader'
 
 export default function Home() {
     const [isDetecting, setIsDetecting] = useState(false)
@@ -63,6 +64,11 @@ export default function Home() {
                 </Text>
             </Fade>
             <Image src={lungImg} alt="upload" width="478px" height="424px" />
+            {isDetecting && (
+                <Flex position="relative" height="70px" overflow="visible">
+                    <CirclesLoader />
+                </Flex>
+            )}
             <Button
                 backgroundColor={isDetecting ? '#D1D5DB' : '#3C9EEE'}
                 padding="12px 24px"
