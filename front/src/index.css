@@ -8,4 +8,8 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17;
+    line-height: normal;
+    font-style: normal;
 }
